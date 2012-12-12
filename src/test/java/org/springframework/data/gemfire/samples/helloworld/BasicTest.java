@@ -17,13 +17,27 @@
 package org.springframework.data.gemfire.samples.helloworld;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.gemstone.gemfire.cache.Region;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:app-client-context.xml")
 public class BasicTest {
+	
+	@Autowired
+	GemfireTemplate template;
 
 	@Test
 	public void testBasic() throws Exception {
 		//Main.main(new String[] {});
+		
+		System.out.println(template.get("Shaozhen"));
 	}
 }
 

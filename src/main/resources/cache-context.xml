@@ -21,6 +21,8 @@
 	<!-- GemFire transaction manager -->
 	<gfe:transaction-manager />
 	
+  	<gfe:cache-server port="40404"/>
+
 	<!-- hello world region -->
 	<!-- since no name is given, the region will be named after the bean -->
 	

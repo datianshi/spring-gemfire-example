@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:gfe="http://www.springframework.org/schema/gemfire"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
+
+	  <gfe:client-cache pool-name="my-pool"/>
+	
+	  <gfe:pool id="my-pool" subscription-enabled="true">
+	     <gfe:locator host="localhost" port="10334"/>
+	 </gfe:pool>
+	 
+	<gfe:client-region id="complex" pool-name="my-pool" shortcut="PROXY" name="myWorld">
+	</gfe:client-region>
+	
+	<bean id="gemfireTemplate" class="org.springframework.data.gemfire.GemfireTemplate">
+		<property name="region" ref="complex"></property>
+	</bean>	 
+	 
+</beans>
