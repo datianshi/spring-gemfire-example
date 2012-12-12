@@ -11,16 +11,31 @@
 	<!-- GemFire cache bean -->
 	<gfe:cache properties-ref="props" />
 	<util:properties id="props" location="cache.properties"/>
-
+	
+	<util:map id="initialData">
+		<entry key="Shaozhen" value="Husband"/>
+		<entry key="Jia" value="Wife"/>
+		<entry key="Felix" value="Son"/>
+	</util:map>
+	
 	<!-- GemFire transaction manager -->
 	<gfe:transaction-manager />
 	
 	<!-- hello world region -->
 	<!-- since no name is given, the region will be named after the bean -->
+	
 	<gfe:replicated-region id="myWorld">
 		<gfe:cache-listener>
 			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheLogger"/>
 		</gfe:cache-listener>
+		<gfe:cache-loader>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheLoaderImpl">
+				<constructor-arg ref="initialData"/>
+			</bean>
+		</gfe:cache-loader>
+		<gfe:cache-writer>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheWriterImpl"/>
+		</gfe:cache-writer>
 	</gfe:replicated-region>
 	
 	<bean id="gemfireTemplate" class="org.springframework.data.gemfire.GemfireTemplate" p:region-ref="myWorld"/>
