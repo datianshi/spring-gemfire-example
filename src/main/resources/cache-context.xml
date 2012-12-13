@@ -17,7 +17,8 @@
 	
 	<util:list id="classes">
 		<value>org.springframework.data.gemfire.samples.domain.CustomObject</value>
-	</util:list>
+	</util:list>	
+	
 	
 	<util:properties id="props" location="cache.properties"/>
 	
@@ -50,8 +51,9 @@
 	</gfe:replicated-region>
 	
 	<gfe:replicated-region id="pdxTest">
-	
-			
+		<gfe:cache-writer>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheWriterObject"/>
+		</gfe:cache-writer>			
 	</gfe:replicated-region>
 			
 	
