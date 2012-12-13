@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.samples.domain.CustomObject;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -31,13 +32,26 @@ import com.gemstone.gemfire.cache.Region;
 public class BasicTest {
 	
 	@Autowired
-	GemfireTemplate template;
+	@Qualifier("stringRegion")
+	GemfireTemplate strRegion;
+	
+	@Autowired
+	@Qualifier("objectRegion")
+	GemfireTemplate objectRegion;	
 
 	@Test
 	public void testBasic() throws Exception {
 		//Main.main(new String[] {});
 		
-		System.out.println(template.get("Shaozhen"));
+		System.out.println(strRegion.get("Shaozhen"));
 	}
+	
+	@Test
+	public void testPdx() throws Exception {
+		//Main.main(new String[] {});
+		objectRegion.put("Shaozhen", new CustomObject("Shaozhen", "Ding"));
+		
+		System.out.println(objectRegion.get("Shaozhen").getClass().getName());
+	}	
 }
 

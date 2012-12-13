@@ -8,17 +8,32 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
 
-	  <gfe:client-cache pool-name="my-pool"/>
+	  <gfe:client-cache pool-name="my-pool" pdx-read-serialized="true" pdx-serializer="pdxSerializer"/>
 	
 	  <gfe:pool id="my-pool" subscription-enabled="true">
 	     <gfe:locator host="localhost" port="10334"/>
 	 </gfe:pool>
 	 
-	<gfe:client-region id="complex" pool-name="my-pool" shortcut="PROXY" name="myWorld">
+	<bean id="pdxSerializer" class="com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer">
+		<property name="serializableClasses" ref="classes"/>
+	</bean>
+	
+	<util:list id="classes">
+		<value>org.springframework.data.gemfire.samples.domain.CustomObject</value>
+	</util:list>	 
+	 
+	<gfe:client-region id="string" pool-name="my-pool" shortcut="PROXY" name="myWorld">
 	</gfe:client-region>
 	
-	<bean id="gemfireTemplate" class="org.springframework.data.gemfire.GemfireTemplate">
-		<property name="region" ref="complex"></property>
+	<gfe:client-region id="object" pool-name="my-pool" shortcut="PROXY" name="pdxTest">
+	</gfe:client-region>	
+	
+	<bean id="stringRegion" class="org.springframework.data.gemfire.GemfireTemplate">
+		<property name="region" ref="string"></property>
 	</bean>	 
+	
+	<bean id="objectRegion" class="org.springframework.data.gemfire.GemfireTemplate">
+		<property name="region" ref="object"></property>
+	</bean>		
 	 
 </beans>

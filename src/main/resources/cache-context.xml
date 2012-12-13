@@ -9,7 +9,16 @@
 		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
 
 	<!-- GemFire cache bean -->
-	<gfe:cache properties-ref="props" />
+	<gfe:cache properties-ref="props" pdx-serializer="pdxSerializer"/>
+	
+	<bean id="pdxSerializer" class="com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer">
+		<property name="serializableClasses" ref="classes"/>
+	</bean>
+	
+	<util:list id="classes">
+		<value>org.springframework.data.gemfire.samples.domain.CustomObject</value>
+	</util:list>
+	
 	<util:properties id="props" location="cache.properties"/>
 	
 	<util:map id="initialData">
@@ -39,6 +48,12 @@
 			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheWriterImpl"/>
 		</gfe:cache-writer>
 	</gfe:replicated-region>
+	
+	<gfe:replicated-region id="pdxTest">
+	
+			
+	</gfe:replicated-region>
+			
 	
 	<bean id="gemfireTemplate" class="org.springframework.data.gemfire.GemfireTemplate" p:region-ref="myWorld"/>
 	
