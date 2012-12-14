@@ -43,7 +43,7 @@ public class BasicTest {
 	public void testBasic() throws Exception {
 		//Main.main(new String[] {});
 		
-		System.out.println(strRegion.get("Shaozhen"));
+		System.out.println(strRegion.get("nihao"));
 	}
 	
 	@Test
