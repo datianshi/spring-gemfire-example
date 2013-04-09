@@ -21,15 +21,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.GemfireCallback;
 import org.springframework.data.gemfire.GemfireTemplate;
 import org.springframework.stereotype.Component;
@@ -46,7 +47,7 @@ import com.gemstone.gemfire.cache.Region;
 @Component
 public class CommandProcessor {
 
-	private static final Pattern COM = Pattern.compile("query|exit|help|size|clear|keys|values|map|containsKey|containsValue|get|remove|put");
+	private static final Pattern COM = Pattern.compile("query|exit|help|size|clear|keys|values|map|containsKey|containsValue|get|remove|put|service|evict");
 
 	private static final Log log = LogFactory.getLog(CommandProcessor.class);
 
@@ -58,6 +59,12 @@ public class CommandProcessor {
 
 	@Resource
 	private GemfireTemplate template;
+	
+	@Autowired
+	private CacheableService service;
+	
+	@Autowired
+	private CacheEvictService cacheEvictService;	
 
 	void start() {
 		if (thread == null) {
@@ -163,6 +170,16 @@ public class CommandProcessor {
 				if ("values".equalsIgnoreCase(command)) {
 					return region.values().toString();
 				}
+				if ("service".equalsIgnoreCase(command)) {
+					service.findCustomObject();
+					service.findCustomObject("key");
+					service.findCustomObject("key", "argument");
+					return "service executed";
+				}
+				if ("evict".equalsIgnoreCase(command)) {
+					cacheEvictService.cacheEvict("key");
+					return "";
+				}				
 
 				if ("map".equalsIgnoreCase(command)) {
 					Set<Entry<String, String>> entrySet = region.entrySet();

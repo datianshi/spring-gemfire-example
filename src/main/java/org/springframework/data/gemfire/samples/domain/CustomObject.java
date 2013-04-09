@@ -1,6 +1,5 @@
 package org.springframework.data.gemfire.samples.domain;
 
-import java.io.Serializable;
 
 public class CustomObject{
 	private String firstName;

@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
 
 	<!-- GemFire cache bean -->
-	<gfe:cache properties-ref="props"  pdx-serializer="pdxSerializer"/>
+	<gfe:cache id="gemfire-cache" properties-ref="props"  pdx-serializer="pdxSerializer"/>
 	
 	<util:properties id="props" location="${propertiesFile:cache.properties}"/>	
 	
