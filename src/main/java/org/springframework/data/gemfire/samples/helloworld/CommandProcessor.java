@@ -33,6 +33,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.gemfire.GemfireCallback;
 import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.data.gemfire.samples.helloworld.cacheable.CacheableServiceTest;
 import org.springframework.stereotype.Component;
 
 import com.gemstone.gemfire.GemFireCheckedException;
@@ -61,7 +62,7 @@ public class CommandProcessor {
 	private GemfireTemplate template;
 	
 	@Autowired
-	private CacheableService service;
+	private CacheableServiceTest service;
 	
 	@Autowired
 	private CacheEvictService cacheEvictService;	
@@ -174,6 +175,7 @@ public class CommandProcessor {
 					service.findCustomObject();
 					service.findCustomObject("key");
 					service.findCustomObject("key", "argument");
+					service.findMultipleRegions("multipleRegion");
 					return "service executed";
 				}
 				if ("evict".equalsIgnoreCase(command)) {

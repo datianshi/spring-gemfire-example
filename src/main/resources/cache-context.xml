@@ -55,6 +55,20 @@
 		</gfe:cache-writer>
 	</gfe:replicated-region>
 	
+	<gfe:replicated-region id="myWorld2">
+		<gfe:cache-listener>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheLogger"/>
+		</gfe:cache-listener>
+		<gfe:cache-loader>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheLoaderImpl">
+				<constructor-arg ref="initialData"/>
+			</bean>
+		</gfe:cache-loader>
+		<gfe:cache-writer>
+			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheWriterImpl"/>
+		</gfe:cache-writer>
+	</gfe:replicated-region>	
+	
 	<gfe:replicated-region id="pdxTest">
 		<gfe:cache-writer>
 			<bean class="org.springframework.data.gemfire.samples.helloworld.CacheWriterObject"/>

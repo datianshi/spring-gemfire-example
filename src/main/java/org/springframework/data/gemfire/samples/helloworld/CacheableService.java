@@ -1,7 +1,6 @@
 package org.springframework.data.gemfire.samples.helloworld;
 
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.gemfire.samples.domain.CustomObject;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,5 +22,11 @@ public class CacheableService {
 	public String findCustomObject(String key, String argument){
 		System.out.println("Cacheable Execution");
 		return "Key is " + argument;
-	}	
+	}
+	
+	@Cacheable(value={"myWorld","myWorld2"}, key="#root")
+	public String findMultipleRegions(String key){
+		return "Key is " + key;
+	}
+			
 }
